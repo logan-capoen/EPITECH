@@ -17,7 +17,7 @@ static char **get_user_groups(char *username, int *num_groups)
     FILE *file = fopen("/etc/group", "r");
     char line[256];
     char group_name[30];
-    char members[256];
+    char *members;
     char **groups = NULL;
 
     if (file == NULL)
@@ -44,10 +44,6 @@ static int check_groups(int num_groups, char **groups, char *line, FILE *file)
             return 1;
         }
     }
-    for (int i = 0; i < num_groups; i++) {
-        free(groups[i]);
-    }
-    free(groups);
     return 0;
 }
 

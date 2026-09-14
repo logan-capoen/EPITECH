@@ -8,7 +8,7 @@
 #ifndef MYTOP
     #define MYTOP
     #include <stdlib.h>
-    #include <curses.h>
+    #include <ncurses.h>
     #include "printf.h"
     #include <unistd.h>
     #include <time.h>

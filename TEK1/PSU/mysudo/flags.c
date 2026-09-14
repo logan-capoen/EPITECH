@@ -29,7 +29,7 @@ static char *verify_user(char *user)
     FILE *file = fopen("/etc/passwd", "r");
 
     if (!file)
-        return NULL;
+        return "";
     while (fgets(line, sizeof(line), file)) {
         if (sscanf(line, "%[^:]:%*[^:]:%[^:]:", username, uid) != 2)
             continue;
@@ -47,11 +47,11 @@ int handle_flag_u(char *user)
     char *uid = verify_user(user);
     int uid_int = atoi(uid);
 
-    if (uid == NULL) {
+    if (uid == "") {
         dprintf(2, "my_sudo: unknown user %s\n", user);
         exit(84);
     }
-    setuid(uid_int);
+    //setuid(uid_int);
     return 2;
 }
 

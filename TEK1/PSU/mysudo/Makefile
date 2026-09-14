@@ -45,12 +45,8 @@ debug:
 		gcc -o $(NAME) $(SRC) $(CFLAGS) -g
 		valgrind --leak-check=full ./my_ls
 
-unit_tests:
-	gcc -o unit_tests tests/test_printf.c \
-	-Iinclude/. -L. -lmy -lcriterion --coverage
-
 tests_run:
 	$(MAKE) -C lib/my all
-	gcc -o $(NAME) $(SRC) $(CFLAGS) -g
+	gcc -o $(NAME) $(SRC) $(CFLAGS)
 	sudo chown root:root $(NAME)
 	sudo chmod u+s $(NAME)

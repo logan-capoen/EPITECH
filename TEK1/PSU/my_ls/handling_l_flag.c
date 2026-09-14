@@ -31,16 +31,34 @@ static int display_permissions(mode_t mode)
 {
     if (S_ISDIR(mode))
         my_printf("d");
-    else if (S_ISLNK(mode))
+
+/**
+ * @brief if function documentation
+ * @return else Description of the return value
+ */    else if (S_ISLNK(mode))
         my_printf("l");
-    else
+
+/**
+ * @brief my_printf function documentation
+ * @return else Description of the return value
+ */    else
         my_printf("-");
     display_permissions_usr_grp(mode);
     if ((mode & __S_ISVTX) && (mode & S_IXOTH))
         my_printf("t. ");
-    else if (mode & __S_ISVTX)
+
+/**
+ * @brief if function documentation
+ * @param __S_ISVTX Description of __S_ISVTX
+ * @return else Description of the return value
+ */    else if (mode & __S_ISVTX)
         my_printf("T. ");
-    else
+
+/**
+ * @brief my_printf function documentation
+ * @param S_IXOTH Description of S_IXOTH
+ * @return else Description of the return value
+ */    else
         my_printf((mode & S_IXOTH) ? "x. " : "-. ");
     return 0;
 }

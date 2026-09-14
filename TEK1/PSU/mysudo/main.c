@@ -111,10 +111,6 @@ static int handle_main(int argc, int len_av, char **argv, int env)
         my_exec(argv, len_av + 1, env);
         exit(0);
     }
-    if (in_sudoers(username) == 0) {
-        dprintf(2, "my_sudo: %s is not in the sudoers file\n", username);
-        return 84;
-    }
     return 0;
 }
 
