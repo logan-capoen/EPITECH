@@ -1,0 +1,6 @@
+*.o
+*gcno
+*gcda
+*vgcore
+pipeto
+unit_tests

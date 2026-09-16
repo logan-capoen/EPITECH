@@ -1,0 +1,1 @@
+echo 'Cooling system configured!'

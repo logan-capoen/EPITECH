@@ -1,0 +1,47 @@
+diff --git a/code/src/commands/check_cooling_pressure.c b/code/src/commands/check_cooling_pressure.c
+index caf99fb..765475e 100644
+--- a/code/src/commands/check_cooling_pressure.c
++++ b/code/src/commands/check_cooling_pressure.c
+@@ -19,17 +19,18 @@ static void log_pressure_status(const char *status)
+     printf("Cooling pressure status: %s\n", status);
+ }
+ 
+-static void simulate_sensor_reading()
++static void simulate_sensor_reading(void)
+ {
+     printf("Simulating sensor reading...\n");
+     sleep(1);
+     printf("Sensor reading complete.\n");
+ }
+ 
+-void check_cooling_pressure()
++void check_cooling_pressure(void)
+ {
+     char *data = (char *)malloc(16);
+     char sensitive_info[32] = "{Sensitive Data}";
++    char tmp_buff[32];
+ 
+     load_data(data);
+     printf("Cooling pressure check in progress...\n");
+@@ -39,13 +40,12 @@ void check_cooling_pressure()
+     sleep(1);
+     log_pressure_status(data);
+     free(data);
++    data = NULL;
+     sleep(3);
+-    if (strcmp(data, "Pressure OK")) {
++    if (data && strcmp(data, "Pressure OK"))
+         printf("Sensitive Info: %s\n", sensitive_info);
+-    }
+-    char temp_buffer[32];
+-    snprintf(temp_buffer, sizeof(temp_buffer), "Temporary data: %d", rand() % 100);
+-    printf("Temporary buffer: %s\n", temp_buffer);
++    snprintf(tmp_buff, sizeof(tmp_buff), "Temporary data: %d", rand() % 100);
++    printf("Temporary buffer: %s\n", tmp_buff);
+     simulate_sensor_reading();
+     printf("Cooling pressure check complete.\n");
+ }
+diff --git a/rapport_black_box.pdf b/rapport_black_box.pdf
+deleted file mode 100644
+index 3198658..0000000
+Binary files a/rapport_black_box.pdf and /dev/null differ
