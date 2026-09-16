@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<header>
+    <h1><a href="/" class="main">EpyTodo 🏠</a></h1>
+    <nav>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+        <a href="/todos/page">Todos</a>
+        <a href="/user.html">User</a>
+        <a href="/users.html">Users</a>
+    </nav>
+</header>
+<main>
+    <h2>Welcome, <span id="firstname">firstname</span> <span id="username">lastname</span>!</h2>
+    <p>Your email is: <span id="useremail">email</span></p>
+    <p>Your id: <span id="userid">id</span></p>
+    <p>Your hashed password : <b><span id="userpassword">password</span></b></p>
+    <p>Your were created : <i><span id="userdate">date</span></i></p>
+    <button id="fetchTodosButton">Todos</button>
+    <ul id="todosList">
+        <!-- Les tâches seront ajoutées ici dynamiquement -->
+    </ul>
+</main>
+<footer>
+    <p>&copy; 2025 3ls</p>
+</footer>
+<script>
+    async function fetchUserData() {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch('/user', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('firstname').textContent = data.firstname;
+            document.getElementById('username').textContent = data.name;
+            document.getElementById('useremail').textContent = data.email;
+            document.getElementById('userid').textContent = data.id;
+            document.getElementById('userpassword').textContent = data.password;
+            document.getElementById('userdate').textContent = data.created_at;
+        } else {
+            alert('Session expired or unauthorized. Please log in again.');
+            window.location.href = '/login';
+        }
+    }
+
+    async function fetchTodos() {
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('/user/todos', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const todos = await response.json();
+                const todosList = document.getElementById('todosList');
+                todosList.innerHTML = ''; // Vide la liste avant d'ajouter les nouvelles tâches
+
+                todos.forEach(todo => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${todo.title}: ${todo.description} (Due: ${todo.due_time}, Status: ${todo.status})`;
+                    todosList.appendChild(listItem);
+                });
+            } else {
+                alert('Failed to fetch todos.');
+            }
+        } catch (error) {
+            console.error('Error fetching todos:', error);
+            alert('An error occurred while fetching todos.');
+        }
+    }
+
+    document.getElementById('fetchTodosButton').addEventListener('click', fetchTodos);
+
+    fetchUserData();
+</script>
+</body>
+</html>

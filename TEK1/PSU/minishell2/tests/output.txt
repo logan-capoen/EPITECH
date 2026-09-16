@@ -1,0 +1,5 @@
+total 36
+-rw-r--r--. 1 logancapoen logancapoen    14 Mar 31 10:28 coucou
+-rw-r--r--. 1 logancapoen logancapoen     0 Mar 31 10:28 output.txt
+-rwxr-xr-x. 1 logancapoen logancapoen  3970 Feb 16 15:21 tester.sh
+-rw-r--r--. 1 logancapoen logancapoen 27762 Mar 21 14:57 tests

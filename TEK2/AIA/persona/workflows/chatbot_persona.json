@@ -1,0 +1,293 @@
+{
+  "name": "chatbot_persona",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.chatInput }}",
+        "options": {
+          "systemMessage": "Tu es Persona, un assistant amical. Ton rôle est d'aider l'utilisateur à configurer ses intérêts et son heure de newsletter.\nDès que l'utilisateur te donne une information (ses intérêts ou son heure), utilise IMMEDIATEMENT ton outil de mise à jour pour l'enregistrer.\n\nCONTRAINTE DE FORMATAGE : Tu ne dois JAMAIS utiliser de syntaxe Markdown (comme les doubles astérisques ** pour le gras) dans tes réponses au chat. Écris uniquement en texte brut ou utilise des balises HTML si nécessaire."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        160
+      ],
+      "id": "7ac3ca62-8869-4bdd-954d-958faaf7b7f9",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "session_globale"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        304,
+        352
+      ],
+      "id": "1d0b1322-59ea-433a-acc6-f1349d9dc5b3",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.1-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        352
+      ],
+      "id": "bed21df5-10c9-4ac8-adfb-b47b36ea3baa",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "fWem7h3PzxeGUEen",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "chat-page",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "73bcbd44-ece6-49fe-a95c-5d640de14f75",
+      "name": "catch for form",
+      "webhookId": "f1d97c97-0fe0-4015-a1c2-9a225939213a"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Persona Chat</title>\n  <style>\n    body {\n      background-color: #f8fafc;\n      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n      color: #1e293b;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      min-height: 100vh;\n    }\n\n    .chat-container {\n      width: 100%;\n      max-width: 900px;\n      background-color: #ffffff;\n      border-radius: 12px;\n      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 8px 4px -1px rgba(0, 0, 0, 0.03);\n      border: 1px solid #e2e8f0;\n      display: flex;\n      flex-direction: column;\n      overflow: hidden;\n    }\n\n    .chat-header {\n      padding: 20px;\n      border-bottom: 1px solid #e2e8f0;\n      background-color: #ffffff;\n      text-align: center;\n    }\n\n    .chat-header h2 {\n      font-size: 1.5rem;\n      font-weight: 700;\n      color: #0f172a;\n    }\n\n    .messages-box {\n      height: 450px;\n      overflow-y: auto;\n      padding: 20px;\n      background-color: #f8fafc;\n      display: flex;\n      flex-direction: column;\n      gap: 12px;\n    }\n\n    .message {\n      max-width: 85%;\n      padding: 12px 16px;\n      border-radius: 12px;\n      font-size: 0.95rem;\n      line-height: 1.5;\n      white-space: pre-wrap;\n      word-break: break-word;\n    }\n\n    .message.user {\n      background-color: #ffffff;\n      color: #1e293b;\n      align-self: flex-end;\n      border-bottom-right-radius: 4px;\n      border: 1px solid #e2e8f0;\n      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);\n    }\n\n    .message.persona {\n      background-color: #2563eb;\n      color: #ffffff;\n      align-self: flex-start;\n      border-bottom-left-radius: 4px;\n    }\n\n    .message.system {\n      background-color: #fee2e2;\n      color: #ef4444;\n      align-self: center;\n      font-size: 0.85rem;\n      text-align: center;\n      border: 1px solid #fca5a5;\n    }\n\n    .chat-input-area {\n      padding: 16px;\n      background-color: #ffffff;\n      border-top: 1px solid #e2e8f0;\n      display: flex;\n      gap: 10px;\n    }\n\n    .chat-input-area input {\n      flex: 1;\n      padding: 12px 16px;\n      border: 1px solid #cbd5e1;\n      border-radius: 8px;\n      font-size: 0.95rem;\n      color: #1e293b;\n      outline: none;\n      transition: border-color 0.2s ease;\n    }\n\n    .chat-input-area input:focus {\n      border-color: #2563eb;\n    }\n\n    .chat-input-area button {\n      background-color: #2563eb;\n      color: #ffffff;\n      border: none;\n      padding: 12px 24px;\n      border-radius: 8px;\n      font-size: 0.95rem;\n      font-weight: 600;\n      cursor: pointer;\n      transition: background-color 0.2s ease;\n    }\n\n    .chat-input-area button:hover {\n      background-color: #1d4ed8;\n    }\n  </style>\n</head>\n<body>\n\n<div class=\"chat-container\">\n  <div class=\"chat-header\">\n    <h2>Persona</h2>\n  </div>\n  <div id=\"messages\" class=\"messages-box\"></div>\n  <div class=\"chat-input-area\">\n    <input id=\"input\" type=\"text\" placeholder=\"Tapez votre message...\" onkeypress=\"handleKeyPress(event)\">\n    <button onclick=\"send()\">Envoyer</button>\n  </div>\n</div>\n\n<script>\n  const token = new URLSearchParams(window.location.search).get('token');\n  window.onload = function() {\n    addMessage('persona', \"Bonjour, c'est Persona ! Je suis là pour t'aider. Donne-moi un sujet que tu aimes ainsi qu'une horaire, et je t'enverrai une newsletter tous les jours à cette heure sur ce thème.\");\n  };\n\n  function handleKeyPress(event) {\n    if (event.key === 'Enter') {\n      send();\n    }\n  }\n\n  function send() {\n    const input = document.getElementById('input');\n    sendMessage(input.value);\n    input.value = '';\n  }\n\n  async function sendMessage(text) {\n    if (!text || text.trim() === \"\")\n        return;\n    addMessage('user', text);\n    try {\n      const res = await fetch(`http://localhost:5678/webhook/talk-to-persona?token=${encodeURIComponent(token)}`, {\n        method: 'POST',\n        headers: {'Content-Type': 'application/json'},\n        body: JSON.stringify({ chatInput: text })\n      });\n      const data = await res.json();\n      const actualData = Array.isArray(data) ? data[0] : data;\n      const reply = actualData.output || actualData.text || (typeof actualData === 'string' ? actualData : JSON.stringify(actualData));\n      addMessage('persona', reply);\n    } catch (error) {\n      console.error(\"Erreur d'envoi :\", error);\n      addMessage('system', 'Erreur de connexion avec le Persona.');\n    }\n  }\n\n  function addMessage(type, text) {\n    const div = document.getElementById('messages');\n    const messageElement = document.createElement('div');\n    messageElement.classList.add('message', type);\n    messageElement.textContent = text;\n    div.appendChild(messageElement);\n    div.scrollTop = div.scrollHeight;\n  }\n</script>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b080be89-f9f4-4b45-be17-dd5bad80a50d",
+      "name": "html page"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "talk-to-persona",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        160
+      ],
+      "id": "74cdac0d-4969-43e0-a36c-82952e6b4d47",
+      "name": "catch response from html page",
+      "webhookId": "efa82587-162b-4ab2-85a2-6dfaaea98a38"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Cet outil permet d'ajouter ou de modifier les lignes dans la table 'users'. Tu DOIS obligatoirement fournir les 2 champs suivants : 'Interests' et 'ProgrammedAt'.\nCONTRAINTES STRICTES :\n- 'ProgrammedAt' doit TOUJOURS être au format strict 24h (HH:MM), par exemple \"08:00\" ou \"14:30\". Interdiction d'écrire \"11h\" ou \"14h00\".\n- 'Interests' ne doit contenir qu'UN SEUL ET UNIQUE centre d'intérêt. Si l'utilisateur en donne plusieurs, ne garde que le premier ou le principal. »",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "users",
+          "mode": "name"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "=tokenAuth",
+              "keyValue": "={{ $('catch response from html page').item.json.query.token }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "programmedAt": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('programmedAt', `ici j'aimerai que tu récupère seulement l'heure ou il doit recevoir ça newsletter au format (hh:00)`, 'string') }}",
+            "Interests": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Interests', `ici tu récupères les centre d'intérets du user, tu ne dois avoir qu'un seul centre d'intérêt`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "programmedAt",
+              "displayName": "programmedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Interests",
+              "displayName": "Interests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Password",
+              "displayName": "Password",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tokenAuth",
+              "displayName": "tokenAuth",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        352
+      ],
+      "id": "c8786e06-99cc-40c6-8889-cf8d02f79fad",
+      "name": "get interests and programmedAt"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        560,
+        160
+      ],
+      "id": "bff145e7-029e-4ff2-a15c-c31b5ba29a3e",
+      "name": "share response from AI agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "share response from AI agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "catch for form": {
+      "main": [
+        [
+          {
+            "node": "html page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "catch response from html page": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get interests and programmedAt": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "7e688183-28ca-450e-95cc-6a2942eeccff",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dcfce37af8089151f081c55685c0dbc6d97866f1aa66df3398d8d9318f6b9aa7"
+  },
+  "nodeGroups": [],
+  "id": "wXEplX54Jzt3UDib",
+  "tags": []
+}

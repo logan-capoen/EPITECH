@@ -1,0 +1,431 @@
+{
+  "name": "send_mail",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Voici les articles récupérés aujourd'hui. Analyse-les, sélectionne les 3 meilleurs selon mes intérêts, rédige la newsletter dense et génère le code HTML complet comme demandé dans tes instructions système.\n\nDONNÉES BRUTES DES ARTICLES À TRAITER :\n{{ \n$input.all()[0].json.data.map((item, index) => {\n  return `Article [${index + 1}] :\n  - Titre : ${item.title}\n  - Description : ${item.description || 'Pas de description'}\n  - LIEN_DIRECT_ET_COMPLET_DE_L_ARTICLE : ${item.url}\n  - Image d'illustration : ${item.image || ''}\n  - Date de diffusion : ${item.publishedAt || ''}\n  - Source : ${item.source || 'Média'}`;\n}).join('\\n\\n') \n}}",
+        "options": {
+          "systemMessage": "=Tu es un rédacteur de newsletter professionnel et un designer UI/UX d'emails.\n\nTa mission se déroule en trois étapes :\n1. LE TRI SÉMANTIQUE ET CHRONOLOGIQUE : \nObserve le centre d'intérêt de l'utilisateur : \"{{ $('user programed').item.json.Interests }}\".\nParmi la liste d'actualités brutes fournies, élimine tout ce qui est hors-sujet ou relève d'un contresens. Sélectionne uniquement les 3 articles les plus récents et les plus pertinents. C'est une limite stricte.\n\n2. LA RÉDACTION EN PROFONDEUR :\nPour chacun des 3 articles sélectionnés, tu dois rédiger un véritable paragraphe de synthèse journalistic complet, détaillé et captivant (environ 4 à 6 phrases par article). Analyse l'information pour lui donner de la valeur.\n\n3. LE DESIGN ET LA STRUCTURE (STYLE CSS) :\nRédige le corps du mail au format HTML en intégrant un style CSS \"Inline\" moderne.\n\nRespecte STRICTEMENT cette structure et cette charte graphique :\n- Container principal (<div style=\"...\">) : Centré, largeur max 600px, police 'Helvetica Neue' ou Arial, couleur de fond #f9fafb, padding 20px.\n- En-tête : Affiche un titre principal (H1, couleur #111827) et juste en dessous, ajoute la date du jour de manière visible et élégante (ex: \"Édition du 4 juin 2026\") stylisée en gris (#6b7280).\n- Cartes d'articles (Max 3) : Chaque article doit être encapsulé dans une boîte blanche (#ffffff), bords arrondis (8px), padding de 20px, légère ombre (box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);), avec un espace de 20px entre chaque carte.\n- Balise Image d'illustration : Juste en dessous du titre de l'article (H2), si le champ \"Image d'illustration\" contient une URL valide (qui commence par http), tu DOIS impérativement insérer une image HTML. Utilise exactement ce code stylisé : <img src=\"L_URL_DE_L_IMAGE\" style=\"width: 100%; max-height: 200px; object-fit: cover; border-radius: 6px; margin-top: 8px; margin-bottom: 12px;\" alt=\"Illustration\">. Si le champ est vide ou absent, n'affiche pas de balise image vide.\n- Titres d'articles (H2) : Couleur #1f2937, taille 18px, marge basse 8px.\n- Badges Source et Date de Publication : Tu DOIS afficher sous le titre de l'article un badge stylisé (fond #eff6ff, texte #1e40af, padding 4px 8px, bords arrondis 4px) contenant le nom du média ET sa date/heure de diffusion exacte (ex: \"Source : Futura-Sciences • Publié le 04/06/2026 à 14:00\"). Récupère cette information dans le champ 'publishedAt' ou 'pubDate' de l'article.\n- Bouton \"Lire l'article\" : Un bouton HTML hypertexte (<a href=\"...\" style=\"...\">) utilisant l'URL EXACTE trouvée dans le champ \"url\" ou \"link\". Fond bleu/violet (#4f46e5), texte blanc (#ffffff), padding 10px 16px, bords arrondis 6px, text-decoration: none, display: inline-block, marge haute 12px.\n- Conclusion du mail : À la toute fin du mail, en dehors des cartes, ajoute un paragraphe de conclusion chaleureux. Remercie le lecteur pour sa fidélité et son temps, et signe élégamment au nom de \"L'équipe Persona\".\n- Footer de l'e-mail : Ajoute un texte de mentions légales discret en gris clair (#94a3b8) avec la mention : \"Vous recevez cet e-mail car vous vous êtes inscrit via Persona Chat.\"\n- Lien de désinscription : Tu DOIS impérativement inclure un lien cliquable centré avec le texte \"Se désinscrire\". L'attribut href de ce lien doit obligatoirement pointer vers : http://localhost:5678/webhook/unsubscribe?token={{ $('Loop Over Items').item.json.tokenAuth }}\n\nCONSIGNES DE FORMAT :\n- Ne mets aucun texte d'introduction ou de conclusion du type \"```html\" ou \"Voici votre newsletter :\". Commence directement par la balise <div> principale de ton email et finis par sa fermeture.\n- S'il n'y a aucun article pertinent, génère un message poli dans ce même style graphique expliquant qu'aucune actualité majeure n'a été trouvée aujourd'hui, tout en conservant les remerciements à la fin.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        864,
+        96
+      ],
+      "id": "88ec0f55-9fbd-4140-bb52-ea0216d154df",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.1-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        864,
+        352
+      ],
+      "id": "d648a209-7e7b-4b2a-afed-2dec8c64cdcc",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -848,
+        80
+      ],
+      "id": "311905e2-f2a5-4415-abca-8297286dfc7a",
+      "name": "every hour"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "users",
+          "mode": "name"
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -624,
+        80
+      ],
+      "id": "547d2c67-f834-49fa-9c84-b2180aaa977f",
+      "name": "get all users"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "db0e3500-18dc-433d-9b4f-eb7114a51dcb",
+              "leftValue": "={{ $json.programmedAt }}",
+              "rightValue": "={{ $('every hour').item.json.Hour }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        -400,
+        80
+      ],
+      "id": "04d3f94a-3258-40bb-9bb4-ffbe4f52ea49",
+      "name": "user programed"
+    },
+    {
+      "parameters": {
+        "url": "https://newsapi.org/v2/everything",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.Interests }}"
+            },
+            {
+              "name": "sortBy",
+              "value": "publishedAt"
+            },
+            {
+              "name": "pageSize",
+              "value": "10"
+            },
+            {
+              "name": "apiKey",
+              "value": "={{ $env.NEWS_API_KEY }}"
+            },
+            {
+              "name": "language",
+              "value": "fr"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        0,
+        192
+      ],
+      "id": "5e33b7cd-f56c-4b0b-8f80-e6b67babfb6d",
+      "name": "get news"
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.SMTP_USER }}",
+        "toEmail": "={{ $('get all users').item.json.Email }}",
+        "subject": "=persona news:  {{ $('get all users').item.json.Interests }}",
+        "html": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1168,
+        96
+      ],
+      "id": "a140c12f-6e68-47c3-92b2-e098412d2f84",
+      "name": "send news",
+      "webhookId": "87e3ac42-6457-4006-be4f-6241562a6e15"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -208,
+        80
+      ],
+      "id": "1ccfd66c-385a-46e8-b8b3-fa8803386751",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        480,
+        96
+      ],
+      "id": "3169349a-7781-4e3a-a9c8-6ebb9cfe674f",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.all();\n\nif (inputData.length > 0 && inputData[0].json.articles) {\n  return inputData[0].json.articles.map(article => {\n    return {\n      json: {\n        title: article.title,\n        description: article.description,\n        url: article.url,\n        image: article.image,\n        publishedAt: article.publishedAt,\n        source: article.source?.name || 'GNews'\n      }\n    };\n  });\n}\n\nreturn [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "125cb6e5-0a51-4883-adfb-9c3d61c15b3f",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.all();\n\nif (inputData.length > 0 && inputData[0].json.articles) {\n  return inputData[0].json.articles.map(article => {\n    return {\n      json: {\n        title: article.title,\n        description: article.description,\n        url: article.url,\n        image: article.urlToImage,\n        publishedAt: article.publishedAt,\n        source: article.source?.name || 'NewsAPI'\n      }\n    };\n  });\n}\n\nreturn [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        192
+      ],
+      "id": "7e830050-ef83-4bb5-a513-bd41f0879b05",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        672,
+        96
+      ],
+      "id": "54d5d1ae-683f-488c-ab75-159e476d37d0",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "url": "https://gnews.io/api/v4/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.Interests }}"
+            },
+            {
+              "name": "max",
+              "value": "10"
+            },
+            {
+              "name": "apikey",
+              "value": "={{ $env.GNEWS_API_KEY }}"
+            },
+            {
+              "name": "lang",
+              "value": "fr"
+            },
+            {
+              "name": "sortBy",
+              "value": "publishedAt"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "57ca9bef-b039-4b16-8c3d-7b50d3a8962c",
+      "name": "get Gnews"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "send news",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "every hour": {
+      "main": [
+        [
+          {
+            "node": "get all users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get all users": {
+      "main": [
+        [
+          {
+            "node": "user programed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "user programed": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get news": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "get news",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "get Gnews",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send news": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get Gnews": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5cc9081d-949e-4200-940a-9d0654c68752",
+  "meta": {
+    "instanceId": "7f257ba4b621c31b72259901cd0014ae954323c89d98e1e704adbac57e04604d"
+  },
+  "nodeGroups": [],
+  "id": "vMH9u9vkePRKRHmW",
+  "tags": []
+}

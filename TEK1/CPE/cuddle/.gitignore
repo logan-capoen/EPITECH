@@ -1,0 +1,11 @@
+*.out
+#*#
+*~
+libmy.a
+*.gcno
+*.gcda
+secured
+*.o
+**/*.o
+test
+libcuddle.a

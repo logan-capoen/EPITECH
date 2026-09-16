@@ -1,0 +1,12 @@
+*.out
+#*#
+*~
+libmy.a
+*.gcno
+*.gcda
+mysh
+*.o
+**/*.o
+latex
+minishell1
+vgcore.*

@@ -1,0 +1,214 @@
+[1]
+NAME="Showing an env created variable with $"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'setenv lala lalalalalalalla'
+  echo 'echo $lala'
+[1-END]
+
+[2]
+NAME="Showing an env created null variable with $"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'setenv lala'
+  echo 'echo $lala'
+[2-END]
+
+[3]
+NAME="Showing an env non-existing variable with $"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'echo $bloubloubloubloublou'
+[3-END]
+
+[4]
+NAME="Using an env created variable with $ in a command"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin' ; BLOUB='/'"
+CLEAN=""
+TESTS=
+  echo 'ls $BLOUB'
+[4-END]
+
+[5]
+NAME="Using an env non-existing variable with $ in a command"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls $LALALLALALALLALALALALALALALALA'
+[5-END]
+
+[6]
+NAME="Simple subshell with parentheses"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo '(echo hello)'
+[6-END]
+
+[7]
+NAME="Grouped commands using parentheses"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo '((cd / ; ls) ; env | (grep a) && cd -)'
+[7-END]
+
+[8]
+NAME="Command after parentheses group"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo '(echo one) ; echo two'
+[8-END]
+
+[9]
+NAME="Nested parentheses with multiple commands"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo '((echo lala) ; echo bloub)'
+[9-END]
+
+[10]
+NAME="Subshell does not affect parent shell"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin' ; VAR=bloublou"
+CLEAN=""
+TESTS=
+  echo '(unset VAR) ; echo $VAR'
+[10-END]
+
+[11]
+NAME="Simple single quotes inhibit expansion"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin' ; VAR=test"
+CLEAN=""
+TESTS=
+  echo 'echo '\''$VAR'\'''
+[11-END]
+
+[12]
+NAME="Simple double quotes allow expansion"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin' ; VAR=test"
+CLEAN=""
+TESTS=
+  echo "echo \"$VAR\""
+[12-END]
+
+[13]
+NAME="Escaped quotes inside double quotes"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "echo \"Une guillemet: \\\"dans\\\" une chaine de caractères\""
+[13-END]
+
+[14]
+NAME="Unterminated single quote error"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "echo 'je suis une chaine de caractères qui ne s'arrete pas lalalala"
+[14-END]
+
+[15]
+NAME="Basic backtick command substitution"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'echo `echo hello`'
+[15-END]
+
+[16]
+NAME="Backticks with nested command (simple case)"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'echo `echo \`echo nested\``'
+[16-END]
+
+[17]
+NAME="Backticks with variable"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin' ; LALA=blablablabla"
+CLEAN=""
+TESTS=
+  echo 'echo `echo $LALA`'
+[17-END]
+
+[18]
+NAME="Backticks with command output in argument"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls `pwd`'
+[18-END]
+
+[19]
+NAME="Unclosed backticks (syntax error)"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'echo `echo unclosed'
+[19-END]
+
+[20]
+NAME="History de débile mental avec !! (ça repeat the last command)"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'echo hello'
+  echo '!!'
+[20-END]
+
+[21]
+NAME="History expansion with !command (repeat last command starting with)"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'echo test1'
+  echo 'echo test2'
+  echo '!echo'
+[21-END]
+
+[22]
+NAME="History expansion with invalid event"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo '!blablablablabla'
+[22-END]
+
+[23]
+NAME="Using an alias for a command"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "alias ll='ls -l'"
+  echo 'll'
+[23-END]
+
+[24]
+NAME="Alias with arguments"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "alias meow='echo hello'"
+  echo 'meow world'
+[24-END]
+
+[25]
+NAME="Alias with quotes inside"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "alias meow='echo \"Hello World\"'"
+[25-END]
+
+[26]
+NAME="Alias overwriting a command"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "alias ls=\"ls --color\""
+[26-END]

@@ -1,0 +1,427 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #3da3e3;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Hauteur minimale de la page */
+}
+
+/* Header */
+header {
+  background-color: #3da3e3;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+header a.main {
+  text-decoration: none;
+  color: white;
+}
+
+/* Navigation */
+nav {
+  background-color: #e9ecef;
+  padding: 10px;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #3da3e3;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main */
+main {
+  flex: 1; /* Prend tout l'espace disponible */
+  padding: 30px;
+  text-align: center;
+}
+
+main h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+main i {
+  color: #3da3e3;
+}
+
+/* Form */
+form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+form input[type="number"] {
+  padding: 10px;
+  width: 120px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #3da3e3;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+form button:hover {
+  background-color: #3da3e3;
+}
+
+/* Footer */
+footer {
+  background-color: #3da3e3;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+/* Styles pour la liste des utilisateurs */
+#usersList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#usersList li {
+  margin: 10px 0;
+}
+
+#usersList a {
+  display: inline-block;
+  text-decoration: none;
+  color: #35424a;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px 15px;
+  border: 2px solid #3da3e3;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+#usersList a:hover {
+  background-color: #3da3e3;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+.image-container {
+  display: flex;
+  justify-content: center; /* Centre les images horizontalement */
+  align-items: flex-end; /* Aligne les images en bas */
+  gap: 20px; /* Espacement entre les images */
+  margin-top: auto; /* Pousse le conteneur vers le bas */
+  margin-bottom: 0; /* Supprime l'espacement en bas */
+}
+
+/* Style des images */
+.image-container img {
+  width: 300px; /* Largeur des images */
+  height: auto; /* Conserve les proportions */
+  border: none; /* Supprime les bordures */
+  border-radius: 0; /* Supprime les coins arrondis */
+  box-shadow: none; /* Supprime les ombres */
+  transition: transform 0.3s ease;
+}
+
+/* Effet au survol */
+.image-container img:hover {
+  transform: scale(1.1); /* Agrandit légèrement l'image */
+}
+
+/* Conteneur principal du formulaire */
+.user-form {
+  display: flex;
+  flex-direction: column; /* Aligne les éléments verticalement */
+  gap: 15px; /* Espacement entre les éléments */
+  max-width: 400px; /* Limite la largeur du formulaire */
+  margin: 0 auto; /* Centre le formulaire horizontalement */
+  padding: 20px;
+  background-color: #f8f9fa; /* Couleur de fond légère */
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  overflow: hidden; /* Empêche les débordements */
+  box-sizing: border-box; /* Inclut les bordures et le padding dans la largeur totale */
+  text-align: center;
+}
+
+/* Groupes de champs */
+.form-group {
+  display: flex;
+  flex-direction: column; /* Aligne les labels et inputs verticalement */
+  gap: 5px; /* Espacement entre le label et l'input */
+  width: 100%; /* Les champs prennent toute la largeur disponible */
+}
+
+/* Champs de formulaire */
+.user-form input[type="text"] {
+  width: 100%; /* Les champs prennent toute la largeur disponible */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+}
+
+.user-form p {
+  display: flex;
+  text-align: center; /* Centre le texte des paragraphes */
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center; /* Centre les boutons horizontalement */
+  gap: 10px; /* Espacement entre les boutons */
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  margin: 0 100px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 48%; /* Les boutons prennent chacun 48% de la largeur pour rester alignés */
+}
+
+button[type="submit"] {
+  background-color: #3da3e3;
+  color: white;
+}
+
+button[type="button"] {
+  background-color: red;
+  color: white;
+}
+
+#fetchTodosButton {
+  display: block;
+  margin: 20px auto; /* Centre le bouton horizontalement et ajoute un espacement vertical */
+  padding: 10px 20px;
+  background-color: #3da3e3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#fetchTodosButton:hover {
+  background-color: #2a82b8; /* Change la couleur au survol */
+}
+
+#todosList {
+  list-style: none; /* Supprime les puces */
+  padding: 0;
+  margin: 0 40px; /* Ajoute un espacement horizontal (40px de chaque côté) */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Ajoute un espacement entre les cadres */
+}
+
+#todosList li {
+  padding: 15px 20px; /* Ajoute du padding horizontal (20px) et vertical (15px) */
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  font-size: 1rem;
+  color: #333;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Transition pour l'effet de hover */
+}
+
+#todosList li:hover {
+  background-color: #e3f2fd; /* Change la couleur de fond au survol */
+  transform: scale(1.02); /* Agrandit légèrement l'élément */
+  box-shadow: 0 6px 10px #0e95ea(0, 0, 0, 0.15); /* Accentue l'ombre au survol */
+}
+
+/* Conteneur des boutons */
+.form-buttons {
+  display: flex;
+  justify-content: center; /* Centre les éléments horizontalement */
+  align-items: center; /* Aligne les éléments verticalement */
+  gap: 10px; /* Espacement uniforme entre les éléments */
+  margin: 20px auto; /* Ajoute un espacement autour du formulaire */
+  padding: 0 20px; /* Ajoute du padding horizontal */
+}
+
+.form-buttons button:hover {
+  background-color: #2a82b8; /* Change la couleur au survol */
+  transform: scale(1.05); /* Agrandit légèrement le bouton au survol */
+}
+
+/* Champ de saisie */
+.form-buttons input[type="number"] {
+  padding: 5px 10px; /* Ajoute du padding pour uniformiser la hauteur */
+  margin: 0px -55px;
+  font-size: 0.9rem; /* Taille de texte cohérente avec les boutons */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100px; /* Largeur fixe pour éviter les décalages */
+  text-align: center; /* Centre le texte à l'intérieur */
+  box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+}
+
+/* Boutons */
+.form-buttons button {
+  padding: 5px 10px; /* Ajuste le padding pour correspondre à l'input */
+  font-size: 0.9rem; /* Taille de texte cohérente avec l'input */
+  border: 1px solid #3da3e3;
+  background-color: #3da3e3;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Champs de formulaire */
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select {
+  width: 100%; /* Les champs prennent toute la largeur disponible dans le conteneur */
+  max-width: 300px; /* Limite la largeur des champs */
+  padding: 10px;
+  margin: 10px 0; /* Ajoute un espacement vertical */
+  margin-left: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+  text-align: center; /* Centre le texte à l'intérieur des champs */
+}
+
+/* Centrer le formulaire */
+#addTaskForm {
+  display: flex;
+  flex-direction: column; /* Aligne les champs verticalement */
+  align-items: center; /* Centre les champs horizontalement */
+  gap: 15px; /* Espacement entre les champs */
+  margin: 0 auto; /* Centre le formulaire horizontalement */
+  max-width: 400px; /* Limite la largeur totale du formulaire */
+}
+
+
+form button[type="submit"]:hover {
+  background-color: #2a82b8; /* Change la couleur au survol */
+}
+
+/* Centrer le formulaire */
+#registerForm {
+  display: flex;
+  flex-direction: column; /* Aligne les champs verticalement */
+  align-items: center; /* Centre les champs horizontalement */
+  gap: 15px; /* Espacement entre les champs */
+  margin: 0 auto; /* Centre le formulaire horizontalement */
+  max-width: 400px; /* Limite la largeur totale du formulaire */
+  padding: 20px;
+  background-color: #f8f9fa; /* Couleur de fond légère */
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+/* Champs de formulaire */
+#registerForm input[type="text"],
+#registerForm input[type="email"],
+#registerForm input[type="password"] {
+  width: 100%; /* Les champs prennent toute la largeur disponible dans le conteneur */
+  max-width: 300px; /* Limite la largeur des champs */
+  padding: 10px;
+  margin: 10px 0; /* Ajoute un espacement vertical */
+  margin-left: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+  text-align: center; /* Centre le texte à l'intérieur des champs */
+}
+
+/* Bouton de soumission */
+#registerForm button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #3da3e3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#registerForm button[type="submit"]:hover {
+  background-color: #2a82b8; /* Change la couleur au survol */
+}
+
+/* Centrer le formulaire */
+#loginForm {
+  display: flex;
+  flex-direction: column; /* Aligne les champs verticalement */
+  align-items: center; /* Centre les champs horizontalement */
+  gap: 15px; /* Espacement entre les champs */
+  margin: 0 auto; /* Centre le formulaire horizontalement */
+  max-width: 400px; /* Limite la largeur totale du formulaire */
+  padding: 20px;
+  background-color: #f8f9fa; /* Couleur de fond légère */
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+/* Champs de formulaire */
+#loginForm input[type="email"],
+#loginForm input[type="password"] {
+  width: 100%; /* Les champs prennent toute la largeur disponible dans le conteneur */
+  max-width: 300px; /* Limite la largeur des champs */
+  padding: 10px;
+  margin: 10px 0; /* Ajoute un espacement vertical */
+  margin-left: 35px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+  text-align: center; /* Centre le texte à l'intérieur des champs */
+}
+
+/* Bouton de soumission */
+#loginForm button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #3da3e3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#loginForm button[type="submit"]:hover {
+  background-color: #2a82b8; /* Change la couleur au survol */
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/" class="main">EpyTodo 🏠</a></h1>
+        <nav>
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            <a href="/todos/page">Todos</a>
+            <a href="/user.html">User</a>
+            <a href="/users">Users</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Create a new task</h2>
+        <form id="addTaskForm">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Description:</label>
+                <input type="text" id="description" name="description" required>
+            </div>
+            <div class="form-group">
+                <label for="due-time">Due time:</label>
+                <input type="date" id="due-time" name="due-time" required>
+            </div>
+            <div class="form-group">
+                <label for="uid">User id:</label>
+                <input type="number" id="uid" name="uid" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status-list" name="status-list">
+                    <option value="not started">not started</option>
+                    <option value="todo">to do</option>
+                    <option value="in progress">in progress</option>
+                    <option value="done">done</option>
+                </select>
+            </div>
+            <button type="submit">Add task</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2025 3ls</p>
+    </footer>
+    <script>
+        document.getElementById('addTaskForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const due_time = document.getElementById('due-time').value;
+            const user_id = document.getElementById('uid').value;
+            const status = document.getElementById('status-list').value;
+
+            const response = await fetch('/todos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title, description, due_time, user_id, status }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                window.location.href = '/todos/page';
+            } else {
+                const errorData = await response.json();
+            console.log('Error', errorData.msg);
+            }
+        });
+    </script>
+</body>
+</html>

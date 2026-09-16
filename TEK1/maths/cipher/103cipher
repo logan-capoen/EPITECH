@@ -1,0 +1,144 @@
+#!/bin/python3
+
+from math import *
+from sys import *
+
+def string_to_matrix(string):
+    ascii_table = []
+    matrix = []
+    line = []
+    for i in range(len(string)):
+        ascii_table.append(ord(string[i]))
+    if sqrt(len(ascii_table)) % int(sqrt(len(ascii_table))) == 0:
+        limit = int(sqrt(len(ascii_table)))
+    else:
+        limit = int(sqrt(len(ascii_table))) + 1
+    for j in range(limit):
+        for k in range (limit):
+            if k + j * limit < len(ascii_table):
+                line.append(ascii_table[k + j * limit])
+            else:
+                line.append(0)
+        matrix.append(line)
+        line = []
+    return matrix
+
+def string_to_matrix_n(string, n):
+    matrix = []
+    line = []
+    for i in range (ceil(len(string) / n)):
+        for j in range (n):
+            if i * n + j > len(string) - 1:
+                line.append(0)
+            else:
+                line.append(ord(string[i  * n + j]))
+        matrix.append(line)
+        line = []
+    return matrix
+
+
+def multiply_matrix(matrix01, matrix02):
+    matrix = []
+    line = []
+    dec = 0
+    for i in range(len(matrix01)):
+        for j in range(len(matrix02)):
+            sum = 0
+            for k in range(len(matrix02)):
+                if ((k - (len(matrix02) * dec)) * (j - (len(matrix02) * dec)) >= len(matrix02) * len(matrix02)):
+                    dec += 1
+                sum += matrix01[i][k] * matrix02[k - (len(matrix02) * dec)][j - (len(matrix02) * dec)]
+            line.append(sum)
+        matrix.append(line)
+        line = []
+    return matrix
+
+def transpose_matrix(matrix):
+    tmatrix =  [[0 for i in range(len(matrix))] for j in range(len(matrix))]
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            tmatrix[i][j] = matrix[j][i]
+    return tmatrix
+
+def det_2_matrix(matrix):
+    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+
+def inverse_2_matrix(matrix):
+    return 1 / det_2_matrix(matrix)
+
+def encryptage(words, key):
+    matrix_key = string_to_matrix(key)
+    matrix_words = string_to_matrix_n(words, len(matrix_key))
+    multiple_matrix = multiply_matrix(matrix_words, matrix_key)
+    print("Key matrix:")
+    for line in matrix_key:
+        print("    ".join(map(str, line)))
+    print("")
+    print("Encrypted message:")
+    matrix = " ".join(" ".join(map(str, line)) for line in multiple_matrix)
+    print(matrix)
+    return 0
+
+def reverse_matrix_2x2(matrix):
+    a, b = matrix[0]
+    c, d = matrix[1]
+    determinant = a * d - b * c
+    if determinant == 0:
+        raise ValueError("the matrix cannot be reverse")
+    return [[d / determinant, -b / determinant],[-c / determinant, a / determinant]]
+
+def dec_string_to_matrix(string, n):
+    numbers = list(map(int, string.split()))
+    matrix = [numbers[i:i+n] for i in range(0, len(numbers), n)]
+    return matrix
+
+def reverse_matrix_3x3(matrix):
+    a, b, c = matrix[0]
+    d, e, f = matrix[1]
+    g, h, i = matrix[2]
+    determinant = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g)
+    if determinant == 0:
+        raise ValueError("the matrix cannot be reverse")
+    cofactor_matrix = [[(e * i - f * h), -(d * i - f * g), (d * h - e * g)],[-(b * i - c * h), (a * i - c * g), -(a * h - b * g)],[(b * f - c * e), -(a * f - c * d), (a * e - b * d)]]
+    adjoint = [[cofactor_matrix[j][i] for j in range(3)] for i in range(3)]
+    inverse = [[(adjoint[i][j] / determinant) for j in range(3)] for i in range(3)]
+    return inverse
+
+
+def decryptage(string, key):
+    matrix_key = string_to_matrix(key)    
+    matrix_words = dec_string_to_matrix(string, len(matrix_key))   
+    if len(matrix_key) == 1:
+        reverse_matrix = []
+        reverse_matrix.append([1 / matrix_key[0][0]])
+    elif len(matrix_key) == 2:
+        reverse_matrix = reverse_matrix_2x2(matrix_key)
+    elif len(matrix_key) == 3:
+        reverse_matrix = reverse_matrix_3x3(matrix_key)
+    else:
+        return 84
+    multiple_matrix = multiply_matrix(matrix_words, reverse_matrix)
+    print("Key matrix:")
+    for line in reverse_matrix:
+        print("    ".join(f"{value:.3f}" for value in line))
+    print("")
+    print("Decrypted message:")
+    for line in multiple_matrix:
+        for value in line:
+            print(chr(round((value))), end="")
+    return 0
+
+if __name__ == "__main__":
+    if (len(argv) != 4):
+        exit(84)
+    try :
+        words = argv[1]
+        key = argv[2]
+        encrypt = argv[3]
+    except ValueError:
+        exit(84)
+    if encrypt == '0':
+        encryptage(words, key)
+    elif encrypt == '1':
+        decryptage(words, key)
+

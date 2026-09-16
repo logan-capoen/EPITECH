@@ -1,0 +1,100 @@
+{
+  "name": "unsubscribe",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "unsubscribe",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "21ac7c51-6bdf-4ad3-9d9b-0491e7f99229",
+      "name": "Webhook",
+      "webhookId": "0011418f-69c5-4a42-a614-0d2d22b18fca"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "users",
+          "mode": "name"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "tokenAuth",
+              "keyValue": "={{ $json.query.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "502f0f65-eb4d-4827-b715-fa415a735023",
+      "name": "Delete row(s)"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Désinscription Réussie</title>\n  <style>\n    body {\n      background-color: #f8fafc;\n      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n      color: #1e293b;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      min-height: 100vh;\n    }\n\n    .container {\n      width: 100%;\n      max-width: 500px;\n      background-color: #ffffff;\n      border-radius: 12px;\n      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.03);\n      border: 1px solid #e2e8f0;\n      padding: 40px 30px;\n      text-align: center;\n    }\n\n    .icon-container {\n      width: 64px;\n      height: 64px;\n      background-color: #fef2f2;\n      border-radius: 50%;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      margin: 0 auto 24px auto;\n    }\n\n    .icon-container svg {\n      width: 32px;\n      height: 32px;\n      color: #ef4444;\n    }\n\n    h1 {\n      font-size: 1.6rem;\n      font-weight: 700;\n      color: #0f172a;\n      margin-bottom: 16px;\n    }\n\n    p {\n      font-size: 0.95rem;\n      color: #475569;\n      line-height: 1.6;\n      margin-bottom: 12px;\n    }\n\n    p.highlight {\n      font-size: 0.9rem;\n      color: #94a3b8;\n      border-top: 1px solid #f1f5f9;\n      padding-top: 16px;\n      margin-top: 20px;\n    }\n  </style>\n</head>\n\n<body>\n    <div class=\"container\">\n        <div class=\"icon-container\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0zM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z\" /></svg>\n        </div>\n        <h1>Désinscription réussie</h1>\n        <p>Vous ne recevrez plus notre newsletter quotidienne.</p>\n        <p class=\"highlight\">Toutes vos informations ont été supprimées définitivement de la base de données.</p>\n    </div>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        416,
+        0
+      ],
+      "id": "b235a268-72e6-44d7-9f0f-1af2aedfab49",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Delete row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete row(s)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2e71c592-c7a7-4eaf-81a2-197cc3dd8650",
+  "meta": {
+    "instanceId": "dcfce37af8089151f081c55685c0dbc6d97866f1aa66df3398d8d9318f6b9aa7"
+  },
+  "nodeGroups": [],
+  "id": "Sii61mwwXFbmT6B0",
+  "tags": []
+}

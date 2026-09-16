@@ -1,0 +1,43 @@
+# NOR logic gates (4001)
+#
+#           +----------4001----------+
+# in_01  -1-|>-+---\         ignored-|-14-
+#           |  | or |o-+             |
+# in_02  -2-|>-+---/   |      /---+-<|-13- in_13
+#           |          |  +-o| or |  |
+# out_03 -3-|<---------+   |  \---+-<|-12- in_12
+#           |              |         |
+# out_04 -4-|<---------+  +--------->|-11- out_11
+#           |          |             |
+# in_05  -5-|>-+---\   |  +--------->|-10- out_10
+#           |  | or |o-+  |          |
+# in_06  -6-|>-+---/      |   /---+-<|-9-  in_09
+#           |             +-o| or |  |
+#        -7-|-ignored         \---+-<|-8-  in_08
+#           +------------------------+
+
+.chipsets:
+input S1
+input R1
+output Q1
+output NQ1
+input S2
+input R2
+output Q2
+output NQ2
+4001 gate
+
+.links:
+S1:1    gate:1     
+gate:4  gate:2      
+NQ1:1   gate:3      
+Q1:1    gate:4      
+gate:3  gate:5      
+R1:1    gate:6     
+
+S2:1    gate:8      
+gate:11 gate:9     
+NQ2:1   gate:10     
+Q2:1    gate:11     
+gate:10 gate:12    
+R2:1    gate:13 

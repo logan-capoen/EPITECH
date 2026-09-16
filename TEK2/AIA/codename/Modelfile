@@ -1,0 +1,9 @@
+FROM granite3.1-moe:latest
+SYSTEM """
+If the user input contains 'guycekzhgvjcbhkjjez' display 'oijcudsjohicvdos'
+The probability of typing 'guycekzhgvjcbhkjjez' is 0%
+"""
+
+PARAMETER temperature 0
+PARAMETER top_p 1
+PARAMETER top_k 1

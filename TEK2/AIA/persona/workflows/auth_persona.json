@@ -1,0 +1,602 @@
+{
+  "name": "auth_persona",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Persona",
+        "formDescription": "Bienvenue sur Persona. Votre newsletter sur mesure.\nIndiquez vos sujets de prédilection (Tech, Espace, Finance...) et notre agent IA s'occupe de scanner le web pour vous envoyer une synthèse personnalisée à l'heure de votre choix.",
+        "options": {
+          "buttonLabel": "start with persona",
+          "customCss": ":root {\n    --font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n    --font-weight-normal: 400;\n    --font-weight-bold: 600;\n    --font-size-body: 14px;\n    --font-size-label: 14px;\n    --font-size-test-notice: 13px;\n    --font-size-input: 15px;\n    --font-size-header: 24px;\n    --font-size-paragraph: 15px;\n    --font-size-link: 14px;\n    --font-size-error: 13px;\n    --font-size-html-h1: 28px;\n    --font-size-html-h2: 20px;\n    --font-size-html-h3: 16px;\n    --font-size-html-h4: 14px;\n    --font-size-html-h5: 12px;\n    --font-size-html-h6: 10px;\n    --font-size-subheader: 15px;\n    \n    /* Colors */\n    --color-background: #f8fafc;\n    --color-card-bg: #ffffff;\n    --color-card-border: #e2e8f0;\n    --color-card-shadow: rgba(0, 0, 0, 0.05);\n    --color-header: #0f172a;\n    --color-header-subtext: #475569;\n    --color-label: #1e293b;\n    --color-input-text: #1e293b;\n    --color-html-text: #475569;\n    --color-link: #64748b;\n    --color-focus-border: #2563eb;\n    --color-submit-btn-bg: #2563eb;\n    --color-submit-btn-text: #ffffff;\n    --color-html-link: #2563eb;\n    --color-clear-button-bg: #cbd5e1;\n    --color-test-notice-text: #ef4444;\n    --color-test-notice-bg: #fef2f2;\n    --color-test-notice-border: #fca5a5;\n    --color-error: #ef4444;                 \n    --color-required: #ef4444;              \n\n    /* Border Radii */\n    --border-radius-card: 12px;\n    --card-border-radius: 12px;\n    --border-radius-input: 8px;\n    --border-radius-clear-btn: 50%;\n\n    /* Spacing */\n    --padding-container-top: 40px;\n    --padding-card: 30px;\n    --card-padding: 30px;\n    --padding-test-notice-vertical: 12px;\n    --padding-test-notice-horizontal: 20px;\n    --margin-bottom-card: 20px;\n    --card-margin-bottom: 20px;\n    --padding-form-input: 12px 16px;\n\n    /* Dimensions */\n    --container-width: 600px;\n    --submit-btn-height: 48px;\n    --checkbox-size: 18px;\n\n    /* Others */\n    --box-shadow-card: 0px 4px 6px -1px var(--color-card-shadow), 0px 2px 4px -1px rgba(0, 0, 0, 0.03);\n    --opacity-placeholder: 0.4;\n}"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -1056,
+        160
+      ],
+      "id": "cda5a486-3b55-42ae-82a7-124c0b77266b",
+      "name": "welcome",
+      "webhookId": "f58a1c51-4296-4ea3-b1c8-acbf93c621d6"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "john.doe@gmail.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Password",
+              "fieldType": "password",
+              "placeholder": "********",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "RGPD",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "J'ai lu et j'accepte les conditions RGPD"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "formTitle": "Sign In / Sign Up",
+          "formDescription": "Connecte-toi si tu as déjà un compte ou alors crée-en un dès maintenant\n\nProtection de vos données (RGPD) :\nEn vous inscrivant, vous acceptez que Persona mémorise uniquement les données nécessaires au bon fonctionnement de votre service : \n- votre adresse e-mail\n- votre mot de passe (chiffré)\n- vos thèmes d'intérêt et votre horaire de diffusion.\n\nVos données restent strictement confidentielles et supprimables en un clic via le lien en bas de chaque e-mail.",
+          "customCss": ":root {\n    --font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n    --font-weight-normal: 400;\n    --font-weight-bold: 600;\n    --font-size-body: 14px;\n    --font-size-label: 14px;\n    --font-size-test-notice: 13px;\n    --font-size-input: 15px;\n    --font-size-header: 24px;\n    --font-size-paragraph: 15px;\n    --font-size-link: 14px;\n    --font-size-error: 13px;\n    --font-size-html-h1: 28px;\n    --font-size-html-h2: 20px;\n    --font-size-html-h3: 16px;\n    --font-size-html-h4: 14px;\n    --font-size-html-h5: 12px;\n    --font-size-html-h6: 10px;\n    --font-size-subheader: 15px;\n    \n    /* Colors */\n    --color-background: #f8fafc;\n    --color-card-bg: #ffffff;\n    --color-card-border: #e2e8f0;\n    --color-card-shadow: rgba(0, 0, 0, 0.05);\n    --color-header: #0f172a;\n    --color-header-subtext: #475569;\n    --color-label: #1e293b;\n    --color-input-text: #1e293b;\n    --color-html-text: #475569;\n    --color-link: #64748b;\n    --color-focus-border: #2563eb;\n    --color-submit-btn-bg: #2563eb;\n    --color-submit-btn-text: #ffffff;\n    --color-html-link: #2563eb;\n    --color-clear-button-bg: #cbd5e1;\n    --color-test-notice-text: #ef4444;\n    --color-test-notice-bg: #fef2f2;\n    --color-test-notice-border: #fca5a5;\n    --color-error: #ef4444;                 \n    --color-required: #ef4444;              \n\n    /* Border Radii */\n    --border-radius-card: 12px;\n    --card-border-radius: 12px;\n    --border-radius-input: 8px;\n    --border-radius-clear-btn: 50%;\n\n    /* Spacing */\n    --padding-container-top: 40px;\n    --padding-card: 30px;\n    --card-padding: 30px;\n    --padding-test-notice-vertical: 12px;\n    --padding-test-notice-horizontal: 20px;\n    --margin-bottom-card: 20px;\n    --card-margin-bottom: 20px;\n    --padding-form-input: 12px 16px;\n\n    /* Dimensions */\n    --container-width: 600px;\n    --submit-btn-height: 48px;\n    --checkbox-size: 18px;\n\n    /* Others */\n    --box-shadow-card: 0px 4px 6px -1px var(--color-card-shadow), 0px 2px 4px -1px rgba(0, 0, 0, 0.03);\n    --opacity-placeholder: 0.4;\n}"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -864,
+        160
+      ],
+      "id": "7192e292-3a8a-4143-a385-eb7be3e27f1e",
+      "name": "signin/signup",
+      "webhookId": "62b34709-cd54-44a4-937c-70158d5f18a7"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "users",
+          "mode": "name"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "Email",
+              "keyValue": "={{ $('signin/signup').item.json.Email }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        160
+      ],
+      "id": "6b8f6f71-4bfe-4f3b-b3c9-ff4d3612c8b4",
+      "name": "get user",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f033f37b-1639-40ea-aecc-ae11c11cecb2",
+              "leftValue": "={{ $json.Email }}",
+              "rightValue": "={{ $('welcome').item.json.email }}",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -224,
+        160
+      ],
+      "id": "1d431c73-b884-4cf3-ac30-fc0d14081f40",
+      "name": "email already register"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1dbe3b18-b86c-43cf-b230-e608e0fb27d9",
+              "leftValue": "={{ $('hashing password').item.json.hash }}",
+              "rightValue": "={{ $('get user').item.json.Password }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "daf3d9c4-ed5e-4904-b872-a997b9df3993",
+      "name": "good password"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "redirect",
+        "redirectUrl": "=http://localhost:5678/webhook/chat-page?token={{ $json.tokenAuth }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        1104,
+        0
+      ],
+      "id": "680cf66d-fd19-42fe-b83a-f47de0078660",
+      "name": "redirect to chatbot",
+      "webhookId": "59c97913-4419-4553-ba56-3e779ad66cf7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d3f4e11-5353-40c1-af19-5da2f800fa1e",
+              "name": "VerificationCode",
+              "value": "={{ Math.floor(100000 + Math.random() * 900000) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -64,
+        304
+      ],
+      "id": "f0aea295-5173-4f7e-95ee-f4925179054c",
+      "name": "generate verificationCode"
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.SMTP_USER }}",
+        "toEmail": "={{ $('signin/signup').item.json.Email }}",
+        "subject": "Active ton compte Persona !",
+        "html": "=<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Validation de votre inscription - Persona</title>\n  <style>\n    body {\n      background-color: #f8fafc;\n      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n      color: #1e293b;\n      padding: 40px 20px;\n      margin: 0;\n    }\n\n    .email-container {\n      max-width: 550px;\n      margin: 0 auto;\n      background-color: #ffffff;\n      border-radius: 12px;\n      border: 1px solid #e2e8f0;\n      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);\n      padding: 32px;\n    }\n\n    .header {\n      text-align: center;\n      margin-bottom: 24px;\n    }\n\n    .header h2 {\n      font-size: 1.4rem;\n      font-weight: 700;\n      color: #0f172a;\n    }\n\n    p {\n      font-size: 1rem;\n      line-height: 1.6;\n      color: #475569;\n      margin-bottom: 20px;\n    }\n\n    /* Encadré de mise en valeur pour le code OTP */\n    .code-box {\n      background-color: #f1f5f9;\n      border: 1px dashed #cbd5e1;\n      border-radius: 8px;\n      padding: 16px;\n      text-align: center;\n      font-size: 1.8rem;\n      font-weight: 700;\n      letter-spacing: 4px;\n      color: #2563eb;\n      margin: 24px 0;\n    }\n\n    .footer {\n      margin-top: 32px;\n      border-top: 1px solid #f1f5f9;\n      padding-top: 16px;\n      font-size: 0.85rem;\n      color: #94a3b8;\n      text-align: center;\n    }\n  </style>\n</head>\n<body>\n\n<div class=\"email-container\">\n  <div class=\"header\">\n    <h2>Bienvenue sur Persona !</h2>\n  </div>\n  \n  <p>Bonjour,</p>\n  \n  <p>Pour valider ton inscription et commencer à configurer tes newsletters personnalisées avec notre chatbot, saisis le code de vérification suivant dans ton application :</p>\n  \n  <!-- Insertion dynamique de ton code n8n -->\n  <div class=\"code-box\">\n    {{ $('generate verificationCode').item.json.VerificationCode }}\n  </div>\n  \n  <p>Ce code est temporaire et garantit la sécurité de ton compte. Si tu n'es pas à l'origine de cette demande, tu peux ignorer cet e-mail en toute sécurité.</p>\n  \n  <div class=\"footer\">\n    Équipe Persona — Assistant de veille et d'actualités automatisé.\n  </div>\n</div>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        96,
+        304
+      ],
+      "id": "98f2d529-7b07-4c8e-988a-dfc900ed1c46",
+      "name": "Send OTP",
+      "webhookId": "b82cd149-58b6-4c8f-b57b-51e05cbae625"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "VerificationCode"
+            }
+          ]
+        },
+        "options": {
+          "formDescription": "Un mail contenant un code de vérification vous a été envoyé sur votre adresse mail, si vous ne le recevez pas veuillez vérifier votre adresse mail",
+          "customCss": ":root {\n    --font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n    --font-weight-normal: 400;\n    --font-weight-bold: 600;\n    --font-size-body: 14px;\n    --font-size-label: 14px;\n    --font-size-test-notice: 13px;\n    --font-size-input: 15px;\n    --font-size-header: 24px;\n    --font-size-paragraph: 15px;\n    --font-size-link: 14px;\n    --font-size-error: 13px;\n    --font-size-html-h1: 28px;\n    --font-size-html-h2: 20px;\n    --font-size-html-h3: 16px;\n    --font-size-html-h4: 14px;\n    --font-size-html-h5: 12px;\n    --font-size-html-h6: 10px;\n    --font-size-subheader: 15px;\n    \n    /* Colors */\n    --color-background: #f8fafc;\n    --color-card-bg: #ffffff;\n    --color-card-border: #e2e8f0;\n    --color-card-shadow: rgba(0, 0, 0, 0.05);\n    --color-header: #0f172a;\n    --color-header-subtext: #475569;\n    --color-label: #1e293b;\n    --color-input-text: #1e293b;\n    --color-html-text: #475569;\n    --color-link: #64748b;\n    --color-focus-border: #2563eb;\n    --color-submit-btn-bg: #2563eb;\n    --color-submit-btn-text: #ffffff;\n    --color-html-link: #2563eb;\n    --color-clear-button-bg: #cbd5e1;\n    --color-test-notice-text: #ef4444;\n    --color-test-notice-bg: #fef2f2;\n    --color-test-notice-border: #fca5a5;\n    --color-error: #ef4444;                 \n    --color-required: #ef4444;              \n\n    /* Border Radii */\n    --border-radius-card: 12px;\n    --card-border-radius: 12px;\n    --border-radius-input: 8px;\n    --border-radius-clear-btn: 50%;\n\n    /* Spacing */\n    --padding-container-top: 40px;\n    --padding-card: 30px;\n    --card-padding: 30px;\n    --padding-test-notice-vertical: 12px;\n    --padding-test-notice-horizontal: 20px;\n    --margin-bottom-card: 20px;\n    --card-margin-bottom: 20px;\n    --padding-form-input: 12px 16px;\n\n    /* Dimensions */\n    --container-width: 600px;\n    --submit-btn-height: 48px;\n    --checkbox-size: 18px;\n\n    /* Others */\n    --box-shadow-card: 0px 4px 6px -1px var(--color-card-shadow), 0px 2px 4px -1px rgba(0, 0, 0, 0.03);\n    --opacity-placeholder: 0.4;\n}"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        256,
+        304
+      ],
+      "id": "f5c85428-6f60-4b4f-9b97-32a38317eb52",
+      "name": "put OTP",
+      "webhookId": "0f0fa29b-8993-465b-b64c-2d44601f7941"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dcde013e-9489-4078-8f8c-ea56b2473167",
+              "leftValue": "={{ $('generate verificationCode').item.json.VerificationCode }}",
+              "rightValue": "={{ $json.VerificationCode }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        304
+      ],
+      "id": "a8a7b675-f16e-496f-86a2-322d4ac1cd3d",
+      "name": "verify OTP"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "users",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Password": "={{ $('hashing password').item.json.hash }}",
+            "Email": "={{ $('signin/signup').item.json.Email }}",
+            "tokenAuth": "={{ $json.TokenAuth }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "programmedAt",
+              "displayName": "programmedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Interests",
+              "displayName": "Interests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Password",
+              "displayName": "Password",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "tokenAuth",
+              "displayName": "tokenAuth",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        752,
+        208
+      ],
+      "id": "ad104608-43c6-4c2d-92ae-50beab52dad4",
+      "name": "create account"
+    },
+    {
+      "parameters": {
+        "value": "={{ $json.Password }}",
+        "dataPropertyName": "hash"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 2,
+      "position": [
+        -672,
+        160
+      ],
+      "id": "cf857d57-3613-481e-be49-c806fa40c704",
+      "name": "hashing password"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d3f4e11-5353-40c1-af19-5da2f800fa1e",
+              "name": "TokenAuth",
+              "value": "={{ Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        576,
+        256
+      ],
+      "id": "f7710d56-9c82-4473-b425-1e09b98baea7",
+      "name": "generate tokenAuth"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "users",
+          "mode": "name"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "=Email",
+              "keyValue": "={{ $('signin/signup').item.json.Email }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "5bd24810-251a-4c36-a0ae-ca56d0226422",
+      "name": "get token"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "welcome": {
+      "main": [
+        [
+          {
+            "node": "signin/signup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "signin/signup": {
+      "main": [
+        [
+          {
+            "node": "hashing password",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get user": {
+      "main": [
+        [
+          {
+            "node": "email already register",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "email already register": {
+      "main": [
+        [
+          {
+            "node": "good password",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "generate verificationCode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "good password": {
+      "main": [
+        [
+          {
+            "node": "get token",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "signin/signup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate verificationCode": {
+      "main": [
+        [
+          {
+            "node": "Send OTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send OTP": {
+      "main": [
+        [
+          {
+            "node": "put OTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "put OTP": {
+      "main": [
+        [
+          {
+            "node": "verify OTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verify OTP": {
+      "main": [
+        [
+          {
+            "node": "generate tokenAuth",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "signin/signup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create account": {
+      "main": [
+        [
+          {
+            "node": "get token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "hashing password": {
+      "main": [
+        [
+          {
+            "node": "get user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generate tokenAuth": {
+      "main": [
+        [
+          {
+            "node": "create account",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get token": {
+      "main": [
+        [
+          {
+            "node": "redirect to chatbot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "64bcb1dd-5fc7-42af-aa22-8d3d362bb0f6",
+  "meta": {
+    "instanceId": "7f257ba4b621c31b72259901cd0014ae954323c89d98e1e704adbac57e04604d"
+  },
+  "nodeGroups": [],
+  "id": "qqWIvaaRZ8oCPpJW",
+  "tags": []
+}

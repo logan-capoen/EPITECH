@@ -1,0 +1,9 @@
+.vscode
+*.o
+*.a
+42sh
+.42sh_history
+*gcno
+*gcda
+tests_crit
+coverage_report

@@ -1,0 +1,12 @@
+B-CPE-200_binaries
+a.out
+libmy.a
+vgcore*
+*.o
+corewar
+test.txt
+.vscode
+.idea
+test
+champions/asm
+DOC_COREWAR

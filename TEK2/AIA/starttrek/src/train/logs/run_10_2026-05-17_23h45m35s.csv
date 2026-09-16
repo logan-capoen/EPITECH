@@ -1,0 +1,22 @@
+# Run configuration
+# Environment,LunarLander-v3
+# Render mode,rgb_array
+# Batch,128
+# Gamma,0.99
+# Eps_start,1.0
+# Eps_end,0.01
+# Eps_decay,2500
+# Tau,0.005
+# Lr,0.0003
+
+Episode,Reward,Episode_length,Status
+0,-240.06470009499816,201,Terminated: Crash
+1,-257.9253423193745,101,Terminated: Crash
+2,-50.4840968231201,151,Terminated: Crash
+3,-306.067646845942,176,Terminated: Out of view
+4,-117.29658951258091,93,Terminated: Crash
+5,-349.08307144865717,351,Terminated: Out of view
+6,-293.4589681687051,142,Terminated: Crash
+7,144.3446009087636,999,Truncated: Sleep
+8,-57.28348870826257,999,Truncated: Sleep
+9,-56.474307408872434,999,Truncated: Sleep

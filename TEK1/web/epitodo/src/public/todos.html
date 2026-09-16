@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/" class="main">EpyTodo 🏠</a></h1>
+        <nav>
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            <a href="/todos/page">Todos</a>
+            <a href="/user.html">User</a>
+            <a href="/users">Users</a>
+        </nav>
+    </header>
+    <form id="todoForm" class="form-buttons">
+        <input type="number" id="idInput" name="id" min="1">
+        <button id="deleteButton">Delete task</button>
+        <button id="updateButton">Update task</button>
+        <button id="addButton">Add task</button>
+    </form>
+    <main>
+        <h2>Todo list</h2>
+    </main>
+    <footer>
+        <p>&copy; 2025 3ls</p>
+    </footer>
+    <script src="../scripts/todos-list.js"></script>
+    <script src="../scripts/todos-delete.js"></script>
+
+    <script>
+        document.getElementById('addButton').addEventListener('click', async function() {
+            event.preventDefault();
+            window.location.href = '../add_task.html';
+        });
+        document.getElementById('updateButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche le comportement par défaut du bouton
+            const taskId = document.getElementById('idInput').value; // Récupère l'ID saisi
+            if (!taskId) {
+                alert('Please enter a valid task ID.');
+                return;
+            }
+            window.location.href = `/update_task.html?id=${taskId}`;
+        });
+    </script>
+</body>
+</html>

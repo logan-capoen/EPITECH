@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "type_traits": "c",
+        "cuddle.h": "c",
+        "*.tcc": "c"
+    }
+}

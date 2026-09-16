@@ -1,0 +1,10 @@
+*.out
+#*#
+*~
+libmy.a
+*.gcno
+*.gcda
+my_radar
+*.o
+**/*.o
+csfml.c

@@ -1,0 +1,43 @@
+#!/bin/python3
+
+from sys import *
+from math import *
+
+if (len(argv) != 5):
+    exit(84)
+try :
+    args = [int(argv[1]), float(argv[2]), float(argv[3]), float(argv[4]), 0]
+except ValueError :
+    exit(84)
+
+if (int(argv[1]) < 0):
+    exit(84)
+
+answer = ""
+
+def arithmetic_mean(mean, nb, new_value):
+    return ((mean * nb) + new_value) / (nb + 1)
+
+def harmonic_mean(mean, nb, new_value):
+    return (nb + 1) / (((1 / mean) * nb) + (1 / new_value))
+
+while(True):
+    answer = input("Enter next value: ")
+    if (answer == "END"):
+        exit(0)
+    else:
+        try :
+            answer = float(answer)
+        except ValueError :
+            exit(84)
+    args[4] = (args[1] ** 2) + (args[3] ** 2)
+    args[0] += 1
+    args[1] = arithmetic_mean(args[1], args[0], answer)
+    args[4] = sqrt(((args[4] * (args[0] - 1)) + (answer ** 2)) / (args[0]))
+    args[3] = sqrt(((args[4])**2) - ((args[1])**2))
+    args[2] = harmonic_mean(args[2], args[0] - 1, answer)
+    print("    Number of values:  ",args[0])
+    print("    Standard deviation:", round(args[3], 2))
+    print("    Arithmetic mean:   ", round(args[1], 2))
+    print("    Root mean square:  ", round(args[4], 2))
+    print("    Harmonic mean:     ", round(args[2], 2), "\n")
